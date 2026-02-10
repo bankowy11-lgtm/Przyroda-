@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Przyroda klasa 4 – Dział 4 TEST</title>
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#264653">
+<script>
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('sw.js');
+}
+</script>
+<style>
+body{margin:0;font-family:Arial;background:#eef}
+.app{max-width:900px;margin:auto;padding:20px;background:#fff}
+h1{text-align:center}
+button{width:100%;padding:14px;margin:8px 0;font-size:16px}
+.correct{background:#2a9d8f;color:#fff}
+.wrong{background:#e63946;color:#fff}
+.progress{height:10px;background:#ccc}
+.bar{height:100%;background:#264653;width:0%}
+</style>
+</head>
+<body>
+<div class="app">
+<h1>Dział 4 – Odkrywamy tajemnice ciała człowieka</h1>
+<div class="progress"><div class="bar" id="bar"></div></div>
+<div id="q"></div>
+<div id="a"></div>
+</div>
+
+<script>
+let pool = [
+{q:"Który zestaw zawiera WYŁĄCZNIE elementy przewodu pokarmowego?",a:["jama ustna, przełyk, żołądek","wątroba, trzustka, ślinianki","jelito grube, serce, płuca"],c:0},
+{q:"Które narządy NALEŻĄ do układu krwionośnego?",a:["serce i naczynia krwionośne","płuca i tchawica","mózg i nerwy"],c:0},
+{q:"Główną funkcją układu krwionośnego jest:",a:["transport tlenu i substancji","trawienie pokarmu","odbiór bodźców"],c:0},
+{q:"Który zestaw narządów odpowiada za pobieranie tlenu?",a:["jama nosowa, tchawica, płuca","żołądek, jelita","serce, żyły"],c:0},
+{q:"Która funkcja dotyczy WYŁĄCZNIE układu oddechowego?",a:["pobieranie tlenu","transport tlenu","regulacja temperatury"],c:0},
+{q:"Który element NIE należy do układu ruchu?",a:["mięśnie szkieletowe","kręgosłup","nerwy"],c:2},
+{q:"Funkcją szkieletu NIE jest:",a:["ochrona narządów","wykonywanie ruchów","rusztowanie ciała"],c:1},
+{q:"Układ nerwowy odpowiada za:",a:["regulację pracy organizmu","transport krwi","trawienie"],c:0},
+{q:"Który narząd analizuje informacje z narządów zmysłów?",a:["mózg","serce","płuca"],c:0},
+{q:"Który składnik pokarmowy jest materiałem budulcowym komórek?",a:["białka","cukry","witaminy"],c:0},
+{q:"Które składniki dostarczają energii?",a:["cukry i tłuszcze","białka i woda","sole mineralne"],c:0},
+{q:"Które składniki regulują pracę organizmu?",a:["witaminy","cukry","tłuszcze"],c:0},
+{q:"Narządem dotyku jest:",a:["skóra","język","ucho"],c:0},
+{q:"Który zmysł odbiera zapachy?",a:["węch","wzrok","smak"],c:0},
+{q:"Która zmiana zachodzi WYŁĄCZNIE u dziewcząt?",a:["miesiączka","obniżenie głosu","zarost"],c:0},
+{q:"Która zmiana jest wspólna dla dziewcząt i chłopców?",a:["szybki wzrost","miesiączka","polucje"],c:0},
+{q:"Który narząd wytwarza komórki jajowe?",a:["jajniki","jądra","macica"],c:0},
+{q:"Który narząd wytwarza plemniki?",a:["jądra","jajniki","jajowody"],c:0},
+{q:"Zapłodnienie zachodzi w:",a:["jajowodzie","macicy","pochwie"],c:0},
+{q:"Rozwój nowego organizmu zachodzi w:",a:["macicy","jajniku","jajowodzie"],c:0},
+{q:"Ciąża u człowieka trwa około:",a:["9 miesięcy","6 miesięcy","12 miesięcy"],c:0}
+];
+
+pool = pool.sort(()=>Math.random()-0.5);
+
+let i=0;
+function show(){
+ document.getElementById("q").innerText = pool[i].q;
+ document.getElementById("bar").style.width = (i/pool.length*100)+"%";
+ const a=document.getElementById("a"); a.innerHTML="";
+ pool[i].a.forEach((t,n)=>{
+  const b=document.createElement("button");
+  b.textContent=t;
+  b.onclick=()=>check(n,b);
+  a.appendChild(b);
+ });
+}
+function check(n,b){
+ if(n===pool[i].c) b.classList.add("correct");
+ else b.classList.add("wrong");
+ setTimeout(()=>{ i++; if(i<pool.length) show(); },700);
+}
+show();
+</script>
+</body>
+</html>
