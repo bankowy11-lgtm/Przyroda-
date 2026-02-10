@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Przyroda klasa 4 – Dział 4 (pełny)</title>
+
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#4361ee">
+
+<script>
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('sw.js');
+}
+</script>
+
+<style>
+html, body { height:100%; margin:0; }
+body { font-family:'Comic Sans MS',Arial; background:linear-gradient(135deg,#80ffdb,#d0f4de); }
+.container { min-height:100vh; display:flex; align-items:center; justify-content:center; padding:20px; }
+.app { width:100%; max-width:900px; background:#fff; border-radius:30px; padding:30px; box-shadow:0 20px 40px rgba(0,0,0,.25); }
+h1{text-align:center;color:#4361ee}
+.menu button,.answers button{ width:100%; padding:18px; margin-bottom:15px; font-size:17px; border-radius:18px; border:none; }
+.menu button{background:#ffd166}
+.menu button.locked{background:#ccc}
+.progress{height:18px;background:#eee;border-radius:10px;overflow:hidden}
+.progress-bar{height:100%;background:#4361ee;width:0%}
+.correct{background:#06d6a0!important;color:#fff}
+.wrong{background:#ef476f!important;color:#fff}
+.hidden{display:none}
+.back{margin-top:20px;background:#4361ee;color:#fff}
+</style>
+</head>
+
+<body>
+<div class="container"><div class="app">
+
+<div id="menu">
+<h1>🧠 Dział 4 – Podsumowanie</h1>
+<div class="menu">
+<button onclick="start()">▶️ Rozpocznij test (40 pytań)</button>
+</div>
+</div>
+
+<div id="quiz" class="hidden">
+<h1 id="title">Podsumowanie działu 4</h1>
+<div class="progress"><div class="progress-bar" id="bar"></div></div>
+<div id="question"></div>
+<div class="answers" id="answers"></div>
+<button class="back" onclick="back()">⬅️ Menu</button>
+</div>
+
+</div></div>
+
+<script>
+const questions = [
+{q:"Który składnik pokarmowy jest podstawowym materiałem budulcowym komórek?",a:["cukry","tłuszcze","białka"],c:2},
+{q:"Które składniki dostarczają organizmowi energii?",a:["witaminy","cukry i tłuszcze","sole mineralne"],c:1},
+{q:"Które składniki regulują pracę organizmu?",a:["cukry","tłuszcze","witaminy"],c:2},
+{q:"Woda w organizmie człowieka jest:",a:["zbędna","niezbędna do życia","potrzebna tylko latem"],c:1},
+{q:"Narządy zmysłów służą do:",a:["trawienia","odbierania informacji z otoczenia","poruszania się"],c:1},
+{q:"Narządem wzroku są:",a:["oczy","uszy","nos"],c:0},
+{q:"Narządem słuchu są:",a:["oczy","uszy","skóra"],c:1},
+{q:"Narządem węchu jest:",a:["nos","język","ucho"],c:0},
+{q:"Narządem smaku jest:",a:["język","nos","oko"],c:0},
+{q:"Narządem dotyku jest:",a:["skóra","ucho","oko"],c:0},
+{q:"Dojrzewanie to okres:",a:["dzieciństwa","zmian w organizmie","starości"],c:1},
+{q:"U dziewcząt dojrzewanie zaczyna się:",a:["wcześniej niż u chłopców","później","w tym samym czasie"],c:0},
+{q:"Która zmiana zachodzi tylko u dziewcząt?",a:["obniżenie głosu","wystąpienie miesiączki","zarost"],c:1},
+{q:"Która zmiana jest wspólna dla dziewcząt i chłopców?",a:["rozwój piersi","szybki wzrost ciała","obniżenie głosu"],c:1},
+{q:"Jajniki wytwarzają:",a:["plemniki","komórki jajowe","krew"],c:1},
+{q:"Jądra wytwarzają:",a:["komórki jajowe","plemniki","enzymy"],c:1},
+{q:"Zapłodnienie to:",a:["poród","połączenie plemnika z komórką jajową","rozwój dziecka"],c:1},
+{q:"Zapłodnienie zachodzi w:",a:["macicy","jajowodzie","pochwie"],c:1},
+{q:"Rozwój dziecka zachodzi w:",a:["jajniku","macicy","jajowodzie"],c:1},
+{q:"Ciąża trwa około:",a:["6 miesięcy","9 miesięcy","12 miesięcy"],c:1}
+];
+
+let i=0;
+function start(){
+ document.getElementById("menu").classList.add("hidden");
+ document.getElementById("quiz").classList.remove("hidden");
+ show();
+}
+function show(){
+ document.getElementById("question").innerText = questions[i].q;
+ document.getElementById("bar").style.width = (i/questions.length*100)+"%";
+ const a=document.getElementById("answers"); a.innerHTML="";
+ questions[i].a.forEach((t,n)=>{
+  const b=document.createElement("button");
+  b.textContent=t;
+  b.onclick=()=>check(n,b);
+  a.appendChild(b);
+ });
+}
+function check(n,b){
+ if(n===questions[i].c) b.classList.add("correct");
+ else b.classList.add("wrong");
+ setTimeout(()=>{ i++; i<questions.length?show():back(); },700);
+}
+function back(){
+ i=0;
+ document.getElementById("quiz").classList.add("hidden");
+ document.getElementById("menu").classList.remove("hidden");
+}
+</script>
+
+</body>
+</html>
